@@ -1,4 +1,4 @@
-= Highly  Scalable Database Designs
+= Highly Scalable Database Designs
 :repo: 13-highly-scalable-database-designs
 :github: https://github.com/BhuwanUpadhyay/{repo}
 :githubmaster: {github}/tree/master

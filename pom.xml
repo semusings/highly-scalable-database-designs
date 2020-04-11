@@ -6,6 +6,11 @@
 
 	<artifactId>13-highly-scalable-database-designs</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>employees-command</module>
+		<module>employees-query</module>
+	</modules>
 
 	<parent>
 		<groupId>io.github.bhuwanupadhyay</groupId>
@@ -23,8 +28,8 @@
 		<tag>HEAD</tag>
 	</scm>
 
-	<name>Highly  Scalable Database Designs</name>
-	<description>Demo Project to Factory Parent.</description>
+	<name>Highly Scalable Database Designs</name>
+	<description>Demo Project to Highly Scalable Database Designs.</description>
 	<url>https://github.com/BhuwanUpadhyay/13-highly-scalable-database-designs</url>
 
 	<properties>

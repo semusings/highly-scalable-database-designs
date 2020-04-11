@@ -1,0 +1,12 @@
+# Insert Employees
+databaseChangeLog:
+  - changeSet:
+      id: insert-employees
+      author: preed
+      changes:
+        - sql:
+            dbms: h2
+            sql: INSERT INTO employee (emp_id, name, status) values ('emp01', 'Apple Gamma', 'JOINED');
+        - sql:
+            dbms: h2
+            sql: INSERT INTO employee (emp_id, name, status) values ('emp02', 'Gamma Apple', 'RESIGNED');

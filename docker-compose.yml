@@ -1,0 +1,7 @@
+version: "3.3"
+services:
+  clustercontrol:
+    image: severalnines/clustercontrol
+    ports:
+    - 5000:80
+    - 5001:443

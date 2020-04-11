@@ -1,0 +1,25 @@
+# Schema Setup
+databaseChangeLog:
+  - changeSet:
+      id: 10000
+      author: developerbhuwan
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: employee_pkey
+                  name: id
+                  type: bigint
+              - column:
+                  name: emp_id
+                  type: VARCHAR(255)
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: status
+                  type: VARCHAR(255)
+            tableName: employee
