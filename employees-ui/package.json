@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run links && ng serve --poll 2000 --port 4300",
-    "build": "ng build",
+    "build": "ng build --prod",
     "links": "ng build --project=@bhuwanupadhyay/utils",
     "test": "jest",
     "test:ci": "jest --runInBand",

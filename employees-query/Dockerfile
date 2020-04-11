@@ -1,4 +1,4 @@
 FROM openjdk:14-jdk-alpine
 VOLUME /tmp
-COPY target/employees-query-1.0.0-SNAPSHOT.jar app.jar
+COPY target/employees-query.jar app.jar
 ENTRYPOINT ["java","--enable-preview","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
