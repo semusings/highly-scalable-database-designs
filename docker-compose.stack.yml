@@ -48,6 +48,13 @@ services:
       - 8080
     depends_on:
       - primary
+    environment:
+      - spring.datasource.driver-class-name=org.postgresql.Driver
+      - spring.liquibase.enabled=true
+      - spring.datasource.username=repl_user
+      - spring.datasource.password=repl_password
+      - spring.datasource.url=jdbc:postgresql://primary:5432/employees
+      - logging.level.liquibase=INFO
     networks:
       - backend
   query:
@@ -56,6 +63,13 @@ services:
       - 8080
     depends_on:
       - replica
+    environment:
+      - spring.datasource.driver-class-name=org.postgresql.Driver
+      - spring.liquibase.enabled=true
+      - spring.datasource.username=repl_user
+      - spring.datasource.password=repl_password
+      - spring.datasource.url=jdbc:postgresql://replica:5432/employees
+      - logging.level.liquibase=INFO
     networks:
       - backend
   ui:
