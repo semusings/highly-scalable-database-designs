@@ -11,6 +11,7 @@
 		<module>employees-command</module>
 		<module>employees-query</module>
 		<module>employees-ui</module>
+		<module>gateway</module>
 	</modules>
 
 	<parent>
