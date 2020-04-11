@@ -3,17 +3,18 @@ services:
   tyk-dashboard:
     image: tykio/tyk-dashboard:latest
     ports:
-    - "3000:3000"
-    - "5000:5000"
+    - 3000:3000
+    - 5000:5000
     networks:
     - tyk
     depends_on:
     - tyk-redis
+    -
     - tyk-mongo
   tyk-gateway:
     image: tykio/tyk-gateway:latest
     ports:
-    - "8080:8080"
+    - 8080:8080
     networks:
     - tyk
     depends_on:
@@ -29,7 +30,7 @@ services:
   tyk-redis:
     image: redis
     ports:
-    - "6379:6379"
+    - 6379:6379
     volumes:
     - redis-data:/data
     networks:
@@ -38,7 +39,7 @@ services:
     image: mongo:3.2
     command: ["mongod", "--smallfiles"]
     ports:
-    - "27017:27017"
+    - 27017:27017
     volumes:
     - mongo-data:/data/db
     networks:
