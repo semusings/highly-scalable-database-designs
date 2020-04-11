@@ -56,5 +56,8 @@ watch: ## Watch list of services from docker swarm
 logs: ## Logs of service from docker swarm
 	@read -p "Service Name: " serviceName; \
 	docker service logs --follow highly-scalable-db_$$serviceName
+inspect: ## Inspect of network from docker swarm
+	@read -p "Network Name: " networkName; \
+	docker network inspect highly-scalable-db_$$networkName
 destroy: ## Destroy deployment in docker swarm
 	docker stack rm highly-scalable-db
