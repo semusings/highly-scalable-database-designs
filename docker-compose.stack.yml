@@ -17,8 +17,9 @@ services:
     networks:
       - backend
     deploy:
-      placement:
-        constraints: [node.role == manager]
+      replicas: 1
+      restart_policy:
+        condition: on-failure
   replica:
     image: bitnami/postgresql:12
     ports:
@@ -78,7 +79,10 @@ services:
       - 80
     networks:
       - frontend
-
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
 volumes:
   postgres-data:
 
