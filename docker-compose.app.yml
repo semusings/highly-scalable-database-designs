@@ -6,15 +6,25 @@ services:
       context: employees-command
     ports:
       - 8080
+    networks:
+      - backend
   query:
     image: bhuwanupadhyay/employees-query
     build:
       context: employees-query
     ports:
       - 8080
+    networks:
+      - backend
   ui:
     image: bhuwanupadhyay/employees-ui
     build:
       context: employees-ui
     ports:
       - 80
+    networks:
+      - frontend
+
+networks:
+  backend:
+  frontend:

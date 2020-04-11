@@ -1,0 +1,41 @@
+version: '3.3'
+services:
+  primary:
+    image: bitnami/postgresql:12
+    ports:
+      - 5432
+    volumes:
+      - postgres-data:/bitnami/postgresql
+    environment:
+      - POSTGRESQL_REPLICATION_MODE=master
+      - POSTGRESQL_REPLICATION_USER=repl_user
+      - POSTGRESQL_REPLICATION_PASSWORD=repl_password
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=my_password
+      - POSTGRESQL_DATABASE=employees
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - postgres
+  replica:
+    image: bitnami/postgresql:12
+    ports:
+      - 5432
+    depends_on:
+      - primary
+    links:
+      - primary
+    environment:
+      - POSTGRESQL_REPLICATION_MODE=slave
+      - POSTGRESQL_REPLICATION_USER=repl_user
+      - POSTGRESQL_REPLICATION_PASSWORD=repl_password
+      - POSTGRESQL_MASTER_HOST=primary
+      - POSTGRESQL_PASSWORD=my_password
+      - POSTGRESQL_MASTER_PORT_NUMBER=5432
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - postgres
+volumes:
+  postgres-data:
+
+networks:
+  postgres:
