@@ -32,6 +32,18 @@ export class Optional<T> {
         }
     }
 
+    ifNotPresent(callback: () => void) {
+        if (this.val === null || undefined) {
+            callback();
+        }
+    }
+
+    ifPresent(callback: (v: T) => void) {
+        if (this.val) {
+            callback(this.val);
+        }
+    }
+
     orElseGet(callback: () => T): T {
         if (this.val) {
             return this.val;
