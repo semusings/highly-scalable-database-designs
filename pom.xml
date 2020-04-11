@@ -4,7 +4,7 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>factory-parent-example</artifactId>
+	<artifactId>13-highly-scalable-database-designs</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 
 	<parent>
@@ -14,18 +14,18 @@
 	</parent>
 
 	<scm>
-		<url>https://github.com/BhuwanUpadhyay/factory-parent-example</url>
-		<connection>scm:git:git://github.com/BhuwanUpadhyay/factory-parent-example.git
+		<url>https://github.com/BhuwanUpadhyay/13-highly-scalable-database-designs</url>
+		<connection>scm:git:git://github.com/BhuwanUpadhyay/13-highly-scalable-database-designs.git
 		</connection>
 		<developerConnection>
-			scm:git:ssh://git@github.com/BhuwanUpadhyay/factory-parent-example.git
+			scm:git:ssh://git@github.com/BhuwanUpadhyay/13-highly-scalable-database-designs.git
 		</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
-	<name>Factory Parent Example</name>
+	<name>Highly  Scalable Database Designs</name>
 	<description>Demo Project to Factory Parent.</description>
-	<url>https://github.com/BhuwanUpadhyay/factory-parent-example</url>
+	<url>https://github.com/BhuwanUpadhyay/13-highly-scalable-database-designs</url>
 
 	<properties>
 		<java.version>14</java.version>

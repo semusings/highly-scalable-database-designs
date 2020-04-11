@@ -1,6 +1,6 @@
 :docs: https://bhuwanupadhyay.github.io/{repo}/
 
-Add `factory-parent-example` dependency in your project.
+Add `13-highly-scalable-database-designs` dependency in your project.
 
 .pom.xml
 ====
@@ -8,7 +8,7 @@ Add `factory-parent-example` dependency in your project.
 ----
 <dependency>
     <groupId>io.github.bhuwanupadhyay</groupId>
-    <artifactId>factory-parent-example</artifactId>
+    <artifactId>13-highly-scalable-database-designs</artifactId>
     <version>{revnumber}</version>
 </dependency>
 ----
