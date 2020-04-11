@@ -5,6 +5,8 @@
 
 
 ```shell script
-docker-compose -f docker-compose.postgres.yml
-docker-compose -f docker-compose.postgres.yml scale replica=3
+docker stack deploy --compose-file docker-compose.yml highly-scalable-db
+docker stack services highly-scalable-db
+docker service logs highly-scalable-db_command
+docker stack rm highly-scalable-db
 ```

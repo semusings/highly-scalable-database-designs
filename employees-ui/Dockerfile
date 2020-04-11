@@ -1,9 +1,8 @@
 # Stage 0, "build-stage", based on Node.js, to build and compile the frontend
 FROM node:13 as build-stage
 WORKDIR /app
-COPY package*.json /app/
-RUN npm install
 COPY ./ /app/
+RUN yarn
 ARG configuration=production
 RUN npm run links && npm run build -- --output-path=./dist/out --configuration $configuration
 

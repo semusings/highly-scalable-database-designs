@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.7'
 services:
   primary:
     image: bitnami/postgresql:12
@@ -15,14 +15,15 @@ services:
       - POSTGRESQL_DATABASE=employees
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
-      - postgres
+      - backend
+    deploy:
+      placement:
+        constraints: [node.role == manager]
   replica:
     image: bitnami/postgresql:12
     ports:
       - 5432
     depends_on:
-      - primary
-    links:
       - primary
     environment:
       - POSTGRESQL_REPLICATION_MODE=slave
@@ -33,9 +34,40 @@ services:
       - POSTGRESQL_MASTER_PORT_NUMBER=5432
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
-      - postgres
+      - backend
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+  command:
+    image: bhuwanupadhyay/employees-command
+    ports:
+      - 8080
+    depends_on:
+      - primary
+    networks:
+      - backend
+  query:
+    image: bhuwanupadhyay/employees-query
+    ports:
+      - 8080
+    depends_on:
+      - replica
+    networks:
+      - backend
+  ui:
+    image: bhuwanupadhyay/employees-ui
+    ports:
+      - 80
+    networks:
+      - frontend
+
 volumes:
   postgres-data:
 
 networks:
-  postgres:
+  backend:
+  frontend:
