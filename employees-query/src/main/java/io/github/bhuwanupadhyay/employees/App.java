@@ -1,6 +1,7 @@
 package io.github.bhuwanupadhyay.employees;
 
 import io.github.bhuwanupadhyay.employees.application.EmployeeHandler;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -15,14 +16,14 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @SpringBootApplication
 public class App {
 
-    public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(App.class, args);
+	}
 
-    @Bean
-    public RouterFunction<ServerResponse> employeeRoutes(EmployeeHandler handler) {
-        return route(GET("/employees/{id}").and(accept(APPLICATION_JSON)), handler::getEmployee)
-                .andRoute(GET("/employees").and(accept(APPLICATION_JSON)), handler::listEmployee);
-    }
+	@Bean
+	public RouterFunction<ServerResponse> employeeRoutes(EmployeeHandler handler) {
+		return route(GET("/employees/{id}").and(accept(APPLICATION_JSON)), handler::getEmployee)
+				.andRoute(GET("/employees").and(accept(APPLICATION_JSON)), handler::listEmployee);
+	}
 
 }

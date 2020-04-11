@@ -8,14 +8,14 @@ import static io.github.bhuwanupadhyay.employees.domain.EmployeeDomain.EmployeeI
 
 public interface EmployeeRepository {
 
-    Optional<Employee> find(EmployeeId employeeId);
+	Optional<Employee> find(EmployeeId employeeId);
 
-    Employee save(Employee employee);
+	Employee save(Employee employee);
 
-    class EmployeeDataException extends RuntimeException {
+	class EmployeeDataException extends RuntimeException {
 
-        public EmployeeDataException(Throwable cause) {
-            super(cause);
-        }
-    }
+		public EmployeeDataException(Throwable cause) {
+			super(cause);
+		}
+	}
 }

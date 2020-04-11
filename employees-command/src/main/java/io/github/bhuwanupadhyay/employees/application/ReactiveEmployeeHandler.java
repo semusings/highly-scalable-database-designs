@@ -24,65 +24,67 @@ import static org.springframework.web.reactive.function.server.ServerResponse.ok
 @Component
 class ReactiveEmployeeHandler implements EmployeeHandler {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ReactiveEmployeeHandler.class);
-    private final EmployeeRepository employeeRepository;
-    private final ErrorResolver errorResolver;
+	private static final Logger LOG = LoggerFactory.getLogger(ReactiveEmployeeHandler.class);
 
-    public ReactiveEmployeeHandler(EmployeeRepository employeeRepository,
-                                   ErrorResolver errorResolver) {
-        this.employeeRepository = employeeRepository;
-        this.errorResolver = errorResolver;
-    }
+	private final EmployeeRepository employeeRepository;
 
-    @Override
-    public Mono<ServerResponse> createEmployee(ServerRequest request) {
+	private final ErrorResolver errorResolver;
 
-        LOG.debug("create employee at: {}", LocalTime.now());
+	public ReactiveEmployeeHandler(EmployeeRepository employeeRepository,
+			ErrorResolver errorResolver) {
+		this.employeeRepository = employeeRepository;
+		this.errorResolver = errorResolver;
+	}
 
-        return request.bodyToMono(EmployeeRequest.class)
-                .map(command -> {
-                    Employee newEmployee = new Employee(null, new EmployeeName(command.name()), EmployeeStatus.JOINED);
-                    Employee savedEmployee = employeeRepository.save(newEmployee);
-                    return new EmployeeResource(savedEmployee.employeeId().id(), savedEmployee.name().name(), savedEmployee.status().name());
-                }).flatMap(resource -> ok().bodyValue(withSuccess(resource)));
+	@Override
+	public Mono<ServerResponse> createEmployee(ServerRequest request) {
 
-    }
+		LOG.debug("create employee at: {}", LocalTime.now());
 
-    @Override
-    public Mono<ServerResponse> updateEmployee(ServerRequest request) {
-        String id = request.pathVariable(EMPLOYEE_ID);
+		return request.bodyToMono(EmployeeRequest.class)
+				.map(command -> {
+					Employee newEmployee = new Employee(null, new EmployeeName(command.name()), EmployeeStatus.JOINED);
+					Employee savedEmployee = employeeRepository.save(newEmployee);
+					return new EmployeeResource(savedEmployee.employeeId().id(), savedEmployee.name().name(), savedEmployee.status().name());
+				}).flatMap(resource -> ok().bodyValue(withSuccess(resource)));
 
-        LOG.debug("update employee id: {}", id);
+	}
 
-        return employeeRepository.find(new EmployeeId(id))
-                .map(employee -> request.bodyToMono(EmployeeRequest.class)
-                        .map(command -> {
-                            Employee newEmployee = new Employee(employee.employeeId(), new EmployeeName(command.name()), employee.status());
-                            Employee savedEmployee = employeeRepository.save(newEmployee);
-                            return new EmployeeResource(savedEmployee.employeeId().id(), savedEmployee.name().name(), savedEmployee.status().name());
-                        })
-                        .flatMap(resource -> ok().bodyValue(withSuccess(resource))))
-                .orElseGet(employeeNotFound(id));
-    }
+	@Override
+	public Mono<ServerResponse> updateEmployee(ServerRequest request) {
+		String id = request.pathVariable(EMPLOYEE_ID);
 
-    @Override
-    public Mono<ServerResponse> deleteEmployee(ServerRequest request) {
+		LOG.debug("update employee id: {}", id);
 
-        String id = request.pathVariable(EMPLOYEE_ID);
+		return employeeRepository.find(new EmployeeId(id))
+				.map(employee -> request.bodyToMono(EmployeeRequest.class)
+						.map(command -> {
+							Employee newEmployee = new Employee(employee.employeeId(), new EmployeeName(command.name()), employee.status());
+							Employee savedEmployee = employeeRepository.save(newEmployee);
+							return new EmployeeResource(savedEmployee.employeeId().id(), savedEmployee.name().name(), savedEmployee.status().name());
+						})
+						.flatMap(resource -> ok().bodyValue(withSuccess(resource))))
+				.orElseGet(employeeNotFound(id));
+	}
 
-        LOG.debug("delete employee id: {}", id);
+	@Override
+	public Mono<ServerResponse> deleteEmployee(ServerRequest request) {
 
-        return employeeRepository.find(new EmployeeId(id))
-                .map(employee -> {
-                    Employee newEmployee = new Employee(employee.employeeId(), employee.name(), EmployeeStatus.RESIGNED);
-                    Employee savedEmployee = employeeRepository.save(newEmployee);
-                    return new EmployeeResource(savedEmployee.employeeId().id(), savedEmployee.name().name(), savedEmployee.status().name());
-                })
-                .map(resource -> ok().bodyValue(withSuccess(resource)))
-                .orElseGet(employeeNotFound(id));
-    }
+		String id = request.pathVariable(EMPLOYEE_ID);
 
-    private Supplier<Mono<ServerResponse>> employeeNotFound(String id) {
-        return () -> badRequest().bodyValue(withErrors(errorResolver.resolve(EMPLOYEE_ENTITY_NOT_FOUND, id)));
-    }
+		LOG.debug("delete employee id: {}", id);
+
+		return employeeRepository.find(new EmployeeId(id))
+				.map(employee -> {
+					Employee newEmployee = new Employee(employee.employeeId(), employee.name(), EmployeeStatus.RESIGNED);
+					Employee savedEmployee = employeeRepository.save(newEmployee);
+					return new EmployeeResource(savedEmployee.employeeId().id(), savedEmployee.name().name(), savedEmployee.status().name());
+				})
+				.map(resource -> ok().bodyValue(withSuccess(resource)))
+				.orElseGet(employeeNotFound(id));
+	}
+
+	private Supplier<Mono<ServerResponse>> employeeNotFound(String id) {
+		return () -> badRequest().bodyValue(withErrors(errorResolver.resolve(EMPLOYEE_ENTITY_NOT_FOUND, id)));
+	}
 }

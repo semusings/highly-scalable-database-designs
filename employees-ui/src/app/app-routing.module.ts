@@ -5,20 +5,20 @@ import {HomeModule} from '../../projects/bhuwanupadhyay/home/src/public-api';
 
 
 const routes: Routes = [
-  {
-    path: '',
-    loadChildren: () => HomeModule,
-    canActivate: [AuthGardGuard]
-  },
-  {
-    path: 'iam',
-    loadChildren: () => LoginModule
-  }
+    {
+        path: '',
+        loadChildren: () => HomeModule,
+        canActivate: [AuthGardGuard]
+    },
+    {
+        path: 'iam',
+        loadChildren: () => LoginModule
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule {
 }

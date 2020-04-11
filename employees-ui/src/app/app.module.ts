@@ -8,22 +8,22 @@ import {applicationModules} from './materials';
 import {AUTH_BASE_PATH} from '../../projects/bhuwanupadhyay/login/src/public-api';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    AppRoutingModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    applicationModules()
-  ],
-  providers: [
-    {
-      provide: AUTH_BASE_PATH,
-      useValue: 'http://localhost:8080/api/v1'
-    }
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        AppRoutingModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        applicationModules()
+    ],
+    providers: [
+        {
+            provide: AUTH_BASE_PATH,
+            useValue: 'http://localhost:8080/api/v1'
+        }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 }

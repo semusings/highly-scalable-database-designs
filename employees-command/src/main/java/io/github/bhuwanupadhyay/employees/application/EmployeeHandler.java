@@ -12,42 +12,43 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 
 public interface EmployeeHandler {
 
-    String EMPLOYEE_ID = "id";
-    String EMPLOYEE_ENTITY_NOT_FOUND = "employee_entity_not_found";
+	String EMPLOYEE_ID = "id";
 
-    Mono<ServerResponse> createEmployee(ServerRequest request);
+	String EMPLOYEE_ENTITY_NOT_FOUND = "employee_entity_not_found";
 
-    Mono<ServerResponse> updateEmployee(ServerRequest request);
+	Mono<ServerResponse> createEmployee(ServerRequest request);
 
-    Mono<ServerResponse> deleteEmployee(ServerRequest request);
+	Mono<ServerResponse> updateEmployee(ServerRequest request);
 
-    record EmployeeRequest(@JsonProperty("name")String name) {
-    }
+	Mono<ServerResponse> deleteEmployee(ServerRequest request);
 
-    record EmployeeResource(@JsonProperty("employeeId")String employeeId,
-                            @JsonProperty("name")String name,
-                            @JsonProperty("status")String status) {
-    }
+	record EmployeeRequest(@JsonProperty("name")String name) {
+	}
 
-    record MessageResource(@JsonProperty("lang")String lang,
-                           @JsonProperty("value")String value) {
-    }
+	record EmployeeResource(@JsonProperty("employeeId")String employeeId,
+							@JsonProperty("name")String name,
+							@JsonProperty("status")String status) {
+	}
 
-    record ErrorResource(@JsonProperty("errorId")String errorId,
-                         @JsonProperty("translations")List<MessageResource>translations) {
-    }
+	record MessageResource(@JsonProperty("lang")String lang,
+						   @JsonProperty("value")String value) {
+	}
 
-    record ServerResource<T>(@JsonProperty("statusCode")int statusCode,
-                             @JsonProperty("resource")T resource,
-                             @JsonProperty("errors")List<ErrorResource>errors) {
+	record ErrorResource(@JsonProperty("errorId")String errorId,
+						 @JsonProperty("translations")List<MessageResource>translations) {
+	}
 
-        public static <E> ServerResource<E> withSuccess(E resource) {
-            return new ServerResource<>(HttpStatus.OK.value(), resource, new ArrayList<>());
-        }
+	record ServerResource<T>(@JsonProperty("statusCode")int statusCode,
+							 @JsonProperty("resource")T resource,
+							 @JsonProperty("errors")List<ErrorResource>errors) {
 
-        public static ServerResource<Void> withErrors(ErrorResource... errors) {
-            return new ServerResource<>(HttpStatus.BAD_REQUEST.value(), null, List.of(errors));
-        }
-    }
+		public static <E> ServerResource<E> withSuccess(E resource) {
+			return new ServerResource<>(HttpStatus.OK.value(), resource, new ArrayList<>());
+		}
+
+		public static ServerResource<Void> withErrors(ErrorResource... errors) {
+			return new ServerResource<>(HttpStatus.BAD_REQUEST.value(), null, List.of(errors));
+		}
+	}
 
 }

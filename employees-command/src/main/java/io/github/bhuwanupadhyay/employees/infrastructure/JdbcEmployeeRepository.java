@@ -13,10 +13,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 class JdbcEmployeeRepository implements EmployeeRepository {
 
-	private final JdbcTemplate jdbc;
+	private final JdbcTemplate jdbcTemplate;
 
-	JdbcEmployeeRepository(JdbcTemplate jdbc) {
-		this.jdbc = jdbc;
+	JdbcEmployeeRepository(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	@Override
@@ -41,7 +41,7 @@ class JdbcEmployeeRepository implements EmployeeRepository {
 
 				employeeId = new EmployeeId(UUID.randomUUID().toString());
 
-				jdbc.update(
+				jdbcTemplate.update(
 						"""
 								        INSERT INTO employee
 								            (emp_id, name, status) values (?, ?, ?)
@@ -53,7 +53,7 @@ class JdbcEmployeeRepository implements EmployeeRepository {
 
 				employeeId = optional.get();
 
-				jdbc.update("""
+				jdbcTemplate.update("""
 								    UPDATE employee e SET
 								    e.name = ?,
 								    e.status = ?
@@ -71,7 +71,7 @@ class JdbcEmployeeRepository implements EmployeeRepository {
 	}
 
 	private Optional<EmployeeData> findByRef(EmployeeId employeeId) {
-		return jdbc.query(
+		return jdbcTemplate.query(
 				"""
 						SELECT e.id, e.emp_id, e.name, e.status
 						FROM employee e where e.emp_id = ?

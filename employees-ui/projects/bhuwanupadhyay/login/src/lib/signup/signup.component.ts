@@ -5,8 +5,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {LoginService} from '../login.service';
 
 @Component({
-  selector: 'bhuwanupadhyay-signup',
-  template: `
+    selector: 'bhuwanupadhyay-signup',
+    template: `
     <mat-card>
       <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -75,30 +75,30 @@ import {LoginService} from '../login.service';
       </mat-card-content>
     </mat-card>
   `,
-  styleUrls: ['./signup.component.scss']
+    styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent extends BasicFormComponent implements OnInit {
 
-  constructor(
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private loginService: LoginService
-  ) {
-    super();
-  }
+    constructor(
+        private fb: FormBuilder,
+        private route: ActivatedRoute,
+        private router: Router,
+        private loginService: LoginService
+    ) {
+        super();
+    }
 
-  async ngOnInit() {
-    this.form = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', Validators.email],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
-    });
-  }
+    async ngOnInit() {
+        this.form = this.fb.group({
+            name: ['', Validators.required],
+            email: ['', Validators.email],
+            password: ['', Validators.required],
+            confirmPassword: ['', Validators.required]
+        });
+    }
 
-  async onSubmit() {
+    async onSubmit() {
 
-  }
+    }
 
 }

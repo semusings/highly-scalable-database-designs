@@ -3,34 +3,34 @@
       <button mat-button routerLink="/">{{title}}</button>
       <button mat-button routerLink="/"><mat-icon>home</mat-icon></button>
     </span>
-  <div fxLayout="row" fxShow="false" fxShow.gt-sm>
-    <button *ngIf="!isAuthenticated" mat-button routerLink="/iam">
-      <mat-icon>power_settings_new</mat-icon>
-      Login
+    <div fxLayout="row" fxShow="false" fxShow.gt-sm>
+        <button *ngIf="!isAuthenticated" mat-button routerLink="/iam">
+            <mat-icon>power_settings_new</mat-icon>
+            Login
+        </button>
+        <button (click)="logout()" *ngIf="isAuthenticated" mat-button>
+            <mat-icon>exit_to_app</mat-icon>
+            Logout
+        </button>
+    </div>
+    <button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm mat-button>
+        <mat-icon>menu</mat-icon>
     </button>
-    <button (click)="logout()" *ngIf="isAuthenticated" mat-button>
-      <mat-icon>exit_to_app</mat-icon>
-      Logout
-    </button>
-  </div>
-  <button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm mat-button>
-    <mat-icon>menu</mat-icon>
-  </button>
 </mat-toolbar>
 
 <mat-menu #menu="matMenu" x-position="before">
-  <button mat-menu-item routerLink="/">
-    <mat-icon>home</mat-icon>
-    Home
-  </button>
-  <button *ngIf="!isAuthenticated" mat-menu-item routerLink="/iam">
-    <mat-icon>power_settings_new</mat-icon>
-    Login
-  </button>
-  <button (click)="logout()" *ngIf="isAuthenticated" mat-menu-item>
-    <mat-icon>exit_to_app</mat-icon>
-    Logout
-  </button>
+    <button mat-menu-item routerLink="/">
+        <mat-icon>home</mat-icon>
+        Home
+    </button>
+    <button *ngIf="!isAuthenticated" mat-menu-item routerLink="/iam">
+        <mat-icon>power_settings_new</mat-icon>
+        Login
+    </button>
+    <button (click)="logout()" *ngIf="isAuthenticated" mat-menu-item>
+        <mat-icon>exit_to_app</mat-icon>
+        Logout
+    </button>
 </mat-menu>
 
 <router-outlet></router-outlet>

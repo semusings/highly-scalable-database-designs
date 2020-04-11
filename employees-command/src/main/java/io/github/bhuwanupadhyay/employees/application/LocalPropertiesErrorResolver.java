@@ -16,21 +16,22 @@ import static io.github.bhuwanupadhyay.employees.application.EmployeeHandler.Err
 @Component
 public class LocalPropertiesErrorResolver implements ErrorResolver {
 
-    private final ResourceLoader resourceLoader;
-    private final Properties properties = new Properties();
+	private final ResourceLoader resourceLoader;
 
-    public LocalPropertiesErrorResolver(ResourceLoader resourceLoader) throws IOException {
-        this.resourceLoader = resourceLoader;
-        Resource resource = this.resourceLoader.getResource("classpath:i18n/en.properties");
-        properties.load(resource.getInputStream());
-    }
+	private final Properties properties = new Properties();
 
-    @Override
-    public ErrorResource resolve(String errorId, Object... params) {
-        String value = (String) properties.get(errorId);
-        if (StringUtils.isEmpty(value))
-            throw new NoTranslationFoundException(errorId);
-        return new ErrorResource(errorId, List.of(new MessageResource("en", String.format(value, params))));
-    }
+	public LocalPropertiesErrorResolver(ResourceLoader resourceLoader) throws IOException {
+		this.resourceLoader = resourceLoader;
+		Resource resource = this.resourceLoader.getResource("classpath:i18n/en.properties");
+		properties.load(resource.getInputStream());
+	}
+
+	@Override
+	public ErrorResource resolve(String errorId, Object... params) {
+		String value = (String) properties.get(errorId);
+		if (StringUtils.isEmpty(value))
+			throw new NoTranslationFoundException(errorId);
+		return new ErrorResource(errorId, List.of(new MessageResource("en", String.format(value, params))));
+	}
 
 }

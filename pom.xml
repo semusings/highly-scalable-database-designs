@@ -20,7 +20,8 @@
 
 	<scm>
 		<url>https://github.com/BhuwanUpadhyay/13-highly-scalable-database-designs</url>
-		<connection>scm:git:git://github.com/BhuwanUpadhyay/13-highly-scalable-database-designs.git
+		<connection>
+			scm:git:git://github.com/BhuwanUpadhyay/13-highly-scalable-database-designs.git
 		</connection>
 		<developerConnection>
 			scm:git:ssh://git@github.com/BhuwanUpadhyay/13-highly-scalable-database-designs.git
@@ -34,10 +35,23 @@
 
 	<properties>
 		<java.version>14</java.version>
+		<maven-compiler-plugin.compilerArgs>--enable-preview
+		</maven-compiler-plugin.compilerArgs>
 	</properties>
 
 	<dependencies>
 
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

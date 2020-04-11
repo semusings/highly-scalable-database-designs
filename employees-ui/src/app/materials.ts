@@ -15,22 +15,22 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {HttpClientModule} from '@angular/common/http';
 
 export function applicationModules() {
-  return [
-    HttpClientModule,
-    FlexLayoutModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatToolbarModule,
-    MatInputModule,
-    MatCardModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTableModule,
-    MatDividerModule,
-    MatSlideToggleModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatProgressSpinnerModule
-  ]
+    return [
+        HttpClientModule,
+        FlexLayoutModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatToolbarModule,
+        MatInputModule,
+        MatCardModule,
+        MatMenuModule,
+        MatIconModule,
+        MatButtonModule,
+        MatTableModule,
+        MatDividerModule,
+        MatSlideToggleModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatProgressSpinnerModule
+    ]
 }

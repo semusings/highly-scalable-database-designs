@@ -11,32 +11,32 @@ import {MatIconModule} from '@angular/material/icon';
 import {ExtendedModule, FlexModule} from '@angular/flex-layout';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
 import {LoginRoutingModule} from './login-routing.module';
-import { ServerErrorTranslatorPipe } from './server-error-translator.pipe';
+import {ServerErrorTranslatorPipe} from './server-error-translator.pipe';
 
 @NgModule({
-  declarations: [
-    LoginComponent,
-    SignupComponent,
-    ResetPasswordComponent,
-    ServerErrorTranslatorPipe
-  ],
-  imports: [
-    MatCardModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    CommonModule,
-    MatButtonModule,
-    MatIconModule,
-    FlexModule,
-    ExtendedModule,
-    LoginRoutingModule
-  ],
-  exports: [
-    LoginComponent,
-    SignupComponent,
-    ResetPasswordComponent
-  ]
+    declarations: [
+        LoginComponent,
+        SignupComponent,
+        ResetPasswordComponent,
+        ServerErrorTranslatorPipe
+    ],
+    imports: [
+        MatCardModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        CommonModule,
+        MatButtonModule,
+        MatIconModule,
+        FlexModule,
+        ExtendedModule,
+        LoginRoutingModule
+    ],
+    exports: [
+        LoginComponent,
+        SignupComponent,
+        ResetPasswordComponent
+    ]
 })
 export class LoginModule {
 }

@@ -5,20 +5,20 @@ import io.github.bhuwanupadhyay.employees.application.EmployeeHandler.ErrorResou
 
 public interface ErrorResolver {
 
-    ErrorResource resolve(String errorId, Object... params);
+	ErrorResource resolve(String errorId, Object... params);
 
-    class NoTranslationFoundException extends RuntimeException {
+	class NoTranslationFoundException extends RuntimeException {
 
-        private final String errorId;
+		private final String errorId;
 
-        public NoTranslationFoundException(String errorId) {
-            super("No translation found for an error id: " + errorId);
-            this.errorId = errorId;
-        }
+		public NoTranslationFoundException(String errorId) {
+			super("No translation found for an error id: " + errorId);
+			this.errorId = errorId;
+		}
 
-        public String getErrorId() {
-            return errorId;
-        }
-    }
+		public String getErrorId() {
+			return errorId;
+		}
+	}
 
 }

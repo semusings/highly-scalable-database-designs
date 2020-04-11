@@ -18,15 +18,15 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @SpringBootApplication
 public class App {
 
-    public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(App.class, args);
+	}
 
-    @Bean
-    public RouterFunction<ServerResponse> employeeRoutes(EmployeeHandler handler) {
-        return route(DELETE("/employees/{id}").and(accept(APPLICATION_JSON)), handler::deleteEmployee)
-                .andRoute(PUT("/employees/{id}").and(accept(APPLICATION_JSON)), handler::updateEmployee)
-                .andRoute(POST("/employees").and(accept(APPLICATION_JSON)), handler::createEmployee);
-    }
+	@Bean
+	public RouterFunction<ServerResponse> employeeRoutes(EmployeeHandler handler) {
+		return route(DELETE("/employees/{id}").and(accept(APPLICATION_JSON)), handler::deleteEmployee)
+				.andRoute(PUT("/employees/{id}").and(accept(APPLICATION_JSON)), handler::updateEmployee)
+				.andRoute(POST("/employees").and(accept(APPLICATION_JSON)), handler::createEmployee);
+	}
 
 }

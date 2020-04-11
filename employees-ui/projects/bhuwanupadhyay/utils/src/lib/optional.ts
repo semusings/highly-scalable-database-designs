@@ -1,59 +1,59 @@
 export class Optional<T> {
 
-  private val: any;
+    private val: any;
 
-  private constructor(val: any) {
-    this.val = val;
-  }
-
-  public static of<T>(val: T) {
-    return new Optional<T>(val);
-  }
-
-  map<R>(callback: (v: T) => R) {
-    if (this.val) {
-      this.val = callback(this.val);
+    private constructor(val: any) {
+        this.val = val;
     }
-    return Optional.of<R>(this.val);
-  }
 
-  filter(callback: (v) => boolean) {
-    if (this.val && !callback(this.val)) {
-      this.val = null;
+    public static of<T>(val: T) {
+        return new Optional<T>(val);
     }
-    return Optional.of<T>(this.val);
-  }
 
-  get(): T {
-    if (this.val) {
-      return this.val;
-    } else {
-      throw new Error('No value present.');
+    map<R>(callback: (v: T) => R) {
+        if (this.val) {
+            this.val = callback(this.val);
+        }
+        return Optional.of<R>(this.val);
     }
-  }
 
-  orElseGet(callback: () => T): T {
-    if (this.val) {
-      return this.val;
-    } else {
-      return callback();
+    filter(callback: (v) => boolean) {
+        if (this.val && !callback(this.val)) {
+            this.val = null;
+        }
+        return Optional.of<T>(this.val);
     }
-  }
 
-  orElse(otherwise: T) {
-    if (this.val) {
-      return this.val;
-    } else {
-      return otherwise;
+    get(): T {
+        if (this.val) {
+            return this.val;
+        } else {
+            throw new Error('No value present.');
+        }
     }
-  }
 
-  orElseThrow(callback: () => Error) {
-    if (this.val) {
-      return this.val;
-    } else {
-      return callback();
+    orElseGet(callback: () => T): T {
+        if (this.val) {
+            return this.val;
+        } else {
+            return callback();
+        }
     }
-  }
+
+    orElse(otherwise: T) {
+        if (this.val) {
+            return this.val;
+        } else {
+            return otherwise;
+        }
+    }
+
+    orElseThrow(callback: () => Error) {
+        if (this.val) {
+            return this.val;
+        } else {
+            return callback();
+        }
+    }
 
 }

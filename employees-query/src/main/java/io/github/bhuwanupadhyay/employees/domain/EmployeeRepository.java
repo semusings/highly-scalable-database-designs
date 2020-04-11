@@ -1,20 +1,20 @@
 package io.github.bhuwanupadhyay.employees.domain;
 
-import io.github.bhuwanupadhyay.employees.domain.EmployeeDomain.EmployeeView;
-
 import java.util.List;
 import java.util.Optional;
 
+import io.github.bhuwanupadhyay.employees.domain.EmployeeDomain.EmployeeView;
+
 public interface EmployeeRepository {
 
-    Optional<EmployeeView> find(String employeeId);
+	Optional<EmployeeView> find(String employeeId);
 
-    List<EmployeeView> list();
+	List<EmployeeView> list();
 
-    class EmployeeDataException extends RuntimeException {
+	class EmployeeDataException extends RuntimeException {
 
-        public EmployeeDataException(Throwable cause) {
-            super(cause);
-        }
-    }
+		public EmployeeDataException(Throwable cause) {
+			super(cause);
+		}
+	}
 }

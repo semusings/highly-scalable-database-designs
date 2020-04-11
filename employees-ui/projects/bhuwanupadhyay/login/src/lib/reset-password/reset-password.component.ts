@@ -5,8 +5,8 @@ import {LoginService} from '../login.service';
 import {BasicFormComponent} from '../model';
 
 @Component({
-  selector: 'bhuwanupadhyay-reset-password',
-  template: `
+    selector: 'bhuwanupadhyay-reset-password',
+    template: `
     <mat-card>
       <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -43,27 +43,27 @@ import {BasicFormComponent} from '../model';
       </mat-card-content>
     </mat-card>
   `,
-  styleUrls: ['./reset-password.component.scss']
+    styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent extends BasicFormComponent implements OnInit {
 
-  constructor(
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private loginService: LoginService
-  ) {
-    super();
-  }
+    constructor(
+        private fb: FormBuilder,
+        private route: ActivatedRoute,
+        private router: Router,
+        private loginService: LoginService
+    ) {
+        super();
+    }
 
-  async ngOnInit() {
-    this.form = this.fb.group({
-      email: ['', Validators.email]
-    });
-  }
+    async ngOnInit() {
+        this.form = this.fb.group({
+            email: ['', Validators.email]
+        });
+    }
 
-  async onSubmit() {
+    async onSubmit() {
 
-  }
+    }
 
 }
