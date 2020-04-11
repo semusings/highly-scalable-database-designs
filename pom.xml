@@ -35,7 +35,8 @@
 
 	<properties>
 		<java.version>14</java.version>
-		<maven-compiler-plugin.compilerArgs>--enable-preview
+		<maven-compiler-plugin.compilerArgs>
+			--enable-preview
 		</maven-compiler-plugin.compilerArgs>
 	</properties>
 
