@@ -10,6 +10,7 @@
 	<modules>
 		<module>employees-command</module>
 		<module>employees-query</module>
+		<module>employees-ui</module>
 	</modules>
 
 	<parent>
