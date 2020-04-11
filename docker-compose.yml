@@ -1,7 +1,20 @@
 version: "3.3"
 services:
-  clustercontrol:
-    image: severalnines/clustercontrol
+  command:
+    image: bhuwanupadhyay/employees-command
+    build:
+      context: employees-command
     ports:
-      - 5000:80
-      - 5001:443
+      - 8080
+  query:
+    image: bhuwanupadhyay/employees-query
+    build:
+      context: employees-query
+    ports:
+      - 8080
+  ui:
+    image: bhuwanupadhyay/employees-ui
+    build:
+      context: employees-ui
+    ports:
+      - 80
