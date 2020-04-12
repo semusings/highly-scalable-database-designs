@@ -1,25 +1,108 @@
 version: '3.7'
+
+volumes:
+  kong_data: {}
+  postgres_data: {}
+
+networks:
+  backend:
+    external: false
+  frontend:
+    external: false
+  kong_net:
+    external: false
+
 services:
-  primary:
-    image: bitnami/postgresql:12
-    ports:
-      - 5432
-    volumes:
-      - postgres-data:/bitnami/postgresql
+  # -------------------------------------------------
+  # Api Gateway
+  # -------------------------------------------------
+
+  kong:
+    image: "${KONG_DOCKER_TAG:-kong:latest}"
+    user: "${KONG_USER:-kong}"
+    depends_on:
+      - db
     environment:
-      - POSTGRESQL_REPLICATION_MODE=master
-      - POSTGRESQL_REPLICATION_USER=repl_user
-      - POSTGRESQL_REPLICATION_PASSWORD=repl_password
-      - POSTGRESQL_USERNAME=postgres
-      - POSTGRESQL_PASSWORD=my_password
-      - POSTGRESQL_DATABASE=employees
-      - ALLOW_EMPTY_PASSWORD=yes
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_LISTEN: '0.0.0.0:8001, 0.0.0.0:8444 ssl'
+      KONG_DATABASE: 'off'
+    networks:
+      - kong_net
+    ports:
+      - "8001:8001/tcp"
+    volumes:
+      - kong_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "kong", "health"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  # -------------------------------------------------
+  # Applications
+  # -------------------------------------------------
+
+  command:
+    image: bhuwanupadhyay/employees-command
+    ports:
+      - 8080
+    depends_on:
+      - primary
+    environment:
+      - spring.datasource.driver-class-name=org.postgresql.Driver
+      - spring.liquibase.enabled=true
+      - spring.datasource.username=repl_user
+      - spring.datasource.password=repl_password
+      - spring.datasource.url=jdbc:postgresql://primary:5432/employees
+      - logging.level.liquibase=INFO
     networks:
       - backend
     deploy:
       replicas: 1
       restart_policy:
         condition: on-failure
+
+  query:
+    image: bhuwanupadhyay/employees-query
+    ports:
+      - 8080
+    depends_on:
+      - replica
+    environment:
+      - spring.datasource.driver-class-name=org.postgresql.Driver
+      - spring.liquibase.enabled=true
+      - spring.datasource.username=repl_user
+      - spring.datasource.password=repl_password
+      - spring.datasource.url=jdbc:postgresql://replica:5432/employees
+      - logging.level.liquibase=INFO
+    networks:
+      - backend
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  ui:
+    image: bhuwanupadhyay/employees-ui
+    ports:
+      - 5000:80
+    networks:
+      - frontend
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  # -------------------------------------------------
+  # Application Backend Databases
+  # -------------------------------------------------
+
   replica:
     image: bitnami/postgresql:12
     ports:
@@ -43,49 +126,24 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
-  command:
-    image: bhuwanupadhyay/employees-command
+
+  primary:
+    image: bitnami/postgresql:12
     ports:
-      - 8080
-    depends_on:
-      - primary
+      - 5432
+    volumes:
+      - postgres_data:/bitnami/postgresql
     environment:
-      - spring.datasource.driver-class-name=org.postgresql.Driver
-      - spring.liquibase.enabled=true
-      - spring.datasource.username=repl_user
-      - spring.datasource.password=repl_password
-      - spring.datasource.url=jdbc:postgresql://primary:5432/employees
-      - logging.level.liquibase=INFO
+      - POSTGRESQL_REPLICATION_MODE=master
+      - POSTGRESQL_REPLICATION_USER=repl_user
+      - POSTGRESQL_REPLICATION_PASSWORD=repl_password
+      - POSTGRESQL_USERNAME=postgres
+      - POSTGRESQL_PASSWORD=my_password
+      - POSTGRESQL_DATABASE=employees
+      - ALLOW_EMPTY_PASSWORD=yes
     networks:
       - backend
-  query:
-    image: bhuwanupadhyay/employees-query
-    ports:
-      - 8080
-    depends_on:
-      - replica
-    environment:
-      - spring.datasource.driver-class-name=org.postgresql.Driver
-      - spring.liquibase.enabled=true
-      - spring.datasource.username=repl_user
-      - spring.datasource.password=repl_password
-      - spring.datasource.url=jdbc:postgresql://replica:5432/employees
-      - logging.level.liquibase=INFO
-    networks:
-      - backend
-  ui:
-    image: bhuwanupadhyay/employees-ui
-    ports:
-      - 5000:80
-    networks:
-      - frontend
     deploy:
       replicas: 1
       restart_policy:
         condition: on-failure
-volumes:
-  postgres-data:
-
-networks:
-  backend:
-  frontend:
