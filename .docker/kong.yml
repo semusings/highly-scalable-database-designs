@@ -1,0 +1,15 @@
+_format_version: "1.1"
+
+services:
+  - name: employees-command
+    url: http://command:8080
+    routes:
+      - name: employees-command
+        paths:
+          - /commands
+  - name: employees-query
+    url: http://query:8080
+    routes:
+      - name: employees-query
+        paths:
+          - /queries

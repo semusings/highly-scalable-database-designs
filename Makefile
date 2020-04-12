@@ -61,3 +61,5 @@ inspect: ## Inspect of network from docker swarm
 	docker network inspect highly-scalable-db_$$networkName
 destroy: ## Destroy deployment in docker swarm
 	docker stack rm highly-scalable-db
+routes: ## Load api configurations in kong api gateway
+	http :8001/config config=@.docker/kong.yml
