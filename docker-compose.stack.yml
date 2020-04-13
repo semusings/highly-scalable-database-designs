@@ -8,37 +8,26 @@ networks:
     external: false
   frontend:
     external: false
-  kong_net:
-    external: false
 
 services:
+
   # -------------------------------------------------
   # Api Gateway
   # -------------------------------------------------
 
-  kong:
-    image: "${KONG_DOCKER_TAG:-kong:latest}"
-    user: "${KONG_USER:-kong}"
+  wso2:
+    image: wso2/wso2am:latest
+    ports:
+      - 9443:9443
+      - 8280:8280
+      - 8243:8243
+    networks:
+      - backend
     depends_on:
       - command
       - query
-    environment:
-      KONG_PROXY_ACCESS_LOG: /dev/stdout
-      KONG_ADMIN_ACCESS_LOG: /dev/stdout
-      KONG_PROXY_ERROR_LOG: /dev/stderr
-      KONG_ADMIN_ERROR_LOG: /dev/stderr
-      KONG_ADMIN_LISTEN: '0.0.0.0:8001, 0.0.0.0:8444 ssl'
-      KONG_DATABASE: 'off'
-    networks:
-      - kong_net
-      - backend
-    ports:
-      - "8001:8001/tcp"
-    healthcheck:
-      test: ["CMD", "kong", "health"]
-      interval: 10s
-      timeout: 10s
-      retries: 10
+    volumes:
+      - ./docker/wso2apim:/home/wso2carbon/wso2-config-volume
     deploy:
       restart_policy:
         condition: on-failure
