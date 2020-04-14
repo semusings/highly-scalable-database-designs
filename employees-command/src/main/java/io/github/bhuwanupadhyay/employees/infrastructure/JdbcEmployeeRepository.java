@@ -54,10 +54,10 @@ class JdbcEmployeeRepository implements EmployeeRepository {
 				employeeId = optional.get();
 
 				jdbcTemplate.update("""
-								    UPDATE employee e SET
-								    e.name = ?,
-								    e.status = ?
-								    where e.emp_id = ?
+								    UPDATE employee SET
+								    name = ?,
+								    status = ?
+								    where emp_id = ?
 								"""
 						, employee.name().name(), employee.status().name(), employeeId.id());
 			}

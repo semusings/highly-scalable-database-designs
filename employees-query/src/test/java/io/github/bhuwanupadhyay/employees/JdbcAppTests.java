@@ -4,17 +4,42 @@ import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 
 @SpringBootTest(
 		classes = App.class,
 		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
+@ContextConfiguration(initializers = {JdbcAppTests.Initializer.class})
+@Testcontainers
 class JdbcAppTests {
+
+	@Container
+	private static final PostgreSQLContainer SQL_CONTAINER = new PostgreSQLContainer()
+			.withDatabaseName("employees")
+			.withUsername("repl_user")
+			.withPassword("repl_password");
+
+	static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+		public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
+			TestPropertyValues.of(
+					"spring.datasource.url=" + SQL_CONTAINER.getJdbcUrl(),
+					"spring.datasource.username=" + SQL_CONTAINER.getUsername(),
+					"spring.datasource.password=" + SQL_CONTAINER.getPassword()
+			).applyTo(configurableApplicationContext.getEnvironment());
+		}
+	}
 
 	@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 	@Autowired

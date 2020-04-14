@@ -1,10 +1,38 @@
-###
-POST http://192.168.1.96/commands/employees
+### Employee API
+
+### Create New Employee
+POST http://localhost:8080/v1/employees
 Content-Type: application/json
 
 {
   "name": "Bhuwan Prasad Upadhyay"
 }
 
-###
-GET http://192.168.1.96/queries/employees
+> {%
+  client.global.set("employeeId", response.body['resource']['employeeId']);
+%}
+
+### Get Employee by Id
+GET http://localhost:8080/v1/employees/{{employeeId}}
+
+### Update an Employee
+PUT http://localhost:8080/v1/employees/{{employeeId}}
+Content-Type: application/json
+
+{
+  "name": "Bandana Poudyal"
+}
+
+### Get Updated Employee by Id
+GET http://localhost:8080/v1/employees/{{employeeId}}
+
+### Delete an Employee
+DELETE http://localhost:8080/v1/employees/{{employeeId}}
+
+### Get Deleted Employee by Id
+GET http://localhost:8080/v1/employees/{{employeeId}}
+
+### List Employees
+GET http://localhost:8080/v1/employees
+
+

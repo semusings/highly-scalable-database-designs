@@ -11,26 +11,26 @@ networks:
 
 services:
 
-  # -------------------------------------------------
-  # Api Gateway
-  # -------------------------------------------------
-
-  wso2:
-    image: wso2/wso2am:latest
-    ports:
-      - 9443:9443
-      - 8280:8280
-      - 8243:8243
-    networks:
-      - backend
-    depends_on:
-      - command
-      - query
-    volumes:
-      - ./docker/wso2apim:/home/wso2carbon/wso2-config-volume
-    deploy:
-      restart_policy:
-        condition: on-failure
+  #  # -------------------------------------------------
+  #  # Api Gateway
+  #  # -------------------------------------------------
+  #
+  #  wso2:
+  #    image: wso2/wso2am:latest
+  #    ports:
+  #      - 9443:9443
+  #      - 8280:8280
+  #      - 8243:8243
+  #    networks:
+  #      - backend
+  #    depends_on:
+  #      - command
+  #      - query
+  #    volumes:
+  #      - ./docker/wso2apim:/home/wso2carbon/wso2-config-volume
+  #    deploy:
+  #      restart_policy:
+  #        condition: on-failure
 
   # -------------------------------------------------
   # Applications
@@ -39,40 +39,40 @@ services:
   command:
     image: bhuwanupadhyay/employees-command
     ports:
-      - 8080
+      - 8081:8080
     depends_on:
       - primary
     environment:
       - spring.datasource.driver-class-name=org.postgresql.Driver
-      - spring.liquibase.enabled=true
       - spring.datasource.username=repl_user
       - spring.datasource.password=repl_password
       - spring.datasource.url=jdbc:postgresql://primary:5432/employees
-      - logging.level.liquibase=INFO
     networks:
       - backend
     deploy:
       replicas: 1
+      update_config:
+        delay: 25s
       restart_policy:
         condition: on-failure
 
   query:
     image: bhuwanupadhyay/employees-query
     ports:
-      - 8080
+      - 8082:8080
     depends_on:
       - replica
     environment:
       - spring.datasource.driver-class-name=org.postgresql.Driver
-      - spring.liquibase.enabled=true
       - spring.datasource.username=repl_user
       - spring.datasource.password=repl_password
       - spring.datasource.url=jdbc:postgresql://replica:5432/employees
-      - logging.level.liquibase=INFO
     networks:
       - backend
     deploy:
       replicas: 1
+      update_config:
+        delay: 25s
       restart_policy:
         condition: on-failure
 
@@ -102,7 +102,7 @@ services:
       - POSTGRESQL_REPLICATION_USER=repl_user
       - POSTGRESQL_REPLICATION_PASSWORD=repl_password
       - POSTGRESQL_MASTER_HOST=primary
-      - POSTGRESQL_PASSWORD=my_password
+      - POSTGRESQL_PASSWORD=password
       - POSTGRESQL_MASTER_PORT_NUMBER=5432
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
@@ -125,8 +125,8 @@ services:
       - POSTGRESQL_REPLICATION_MODE=master
       - POSTGRESQL_REPLICATION_USER=repl_user
       - POSTGRESQL_REPLICATION_PASSWORD=repl_password
-      - POSTGRESQL_USERNAME=postgres
-      - POSTGRESQL_PASSWORD=my_password
+      - POSTGRESQL_USERNAME=user
+      - POSTGRESQL_PASSWORD=password
       - POSTGRESQL_DATABASE=employees
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
