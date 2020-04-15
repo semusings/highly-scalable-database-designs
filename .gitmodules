@@ -1,3 +1,7 @@
 [submodule "cicd/ci"]
 	path = cicd/ci
 	url = git@github.com:BhuwanUpadhyay/ci.git
+[submodule "employees"]
+	path = employees
+	url = git@github.com:BhuwanUpadhyay/employees.git
+	branch = 13-highly-scalable-database-designs

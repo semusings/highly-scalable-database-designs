@@ -7,11 +7,6 @@
 	<artifactId>13-highly-scalable-database-designs</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<modules>
-		<module>employees-command</module>
-		<module>employees-query</module>
-		<module>employees-ui</module>
-	</modules>
 
 	<parent>
 		<groupId>io.github.bhuwanupadhyay</groupId>
@@ -36,41 +31,10 @@
 
 	<properties>
 		<java.version>14</java.version>
-		<maven-compiler-plugin.compilerArgs>
-			--enable-preview
-		</maven-compiler-plugin.compilerArgs>
 	</properties>
 
 	<dependencies>
 
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.testcontainers</groupId>
-				<artifactId>junit-jupiter</artifactId>
-				<version>1.13.0</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.testcontainers</groupId>
-				<artifactId>postgresql</artifactId>
-				<version>1.13.0</version>
-				<scope>test</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 </project>
