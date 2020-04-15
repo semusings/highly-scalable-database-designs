@@ -4,6 +4,8 @@ volumes:
   postgres_data: {}
 
 networks:
+  gateway:
+    external: false
   backend:
     external: false
   frontend:
@@ -11,26 +13,26 @@ networks:
 
 services:
 
-  #  # -------------------------------------------------
-  #  # Api Gateway
-  #  # -------------------------------------------------
-  #
-  #  wso2:
-  #    image: wso2/wso2am:latest
-  #    ports:
-  #      - 9443:9443
-  #      - 8280:8280
-  #      - 8243:8243
-  #    networks:
-  #      - backend
-  #    depends_on:
-  #      - command
-  #      - query
-  #    volumes:
-  #      - ./docker/wso2apim:/home/wso2carbon/wso2-config-volume
-  #    deploy:
-  #      restart_policy:
-  #        condition: on-failure
+  # -------------------------------------------------
+  # Api Gateway
+  # -------------------------------------------------
+
+  gateway:
+    image: devopsfaith/krakend:1.1.1-alpine
+    ports:
+      - 8080:8080
+    networks:
+      - gateway
+      - backend
+    depends_on:
+      - command
+      - query
+    volumes:
+      - ./docker/krakend:/etc/krakend/
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
 
   # -------------------------------------------------
   # Applications
@@ -39,7 +41,7 @@ services:
   command:
     image: bhuwanupadhyay/employees-command
     ports:
-      - 8081:8080
+      - 8080
     depends_on:
       - primary
     environment:
@@ -59,7 +61,7 @@ services:
   query:
     image: bhuwanupadhyay/employees-query
     ports:
-      - 8082:8080
+      - 8080
     depends_on:
       - replica
     environment:
@@ -80,8 +82,11 @@ services:
     image: bhuwanupadhyay/employees-ui
     ports:
       - 5000:80
+    depends_on:
+      - gateway
     networks:
       - frontend
+      - gateway
     deploy:
       replicas: 1
       restart_policy:

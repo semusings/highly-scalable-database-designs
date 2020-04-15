@@ -9,7 +9,7 @@
           "url_pattern": "/employees",
           "method": "GET",
           "host": [
-            "http://localhost:8082"
+            "http://query:8080"
           ]
         }
       ]
@@ -22,7 +22,7 @@
           "url_pattern": "/employees/{id}",
           "method": "GET",
           "host": [
-            "http://localhost:8082"
+            "http://query:8080"
           ]
         }
       ]
@@ -35,7 +35,7 @@
           "url_pattern": "/employees",
           "method": "POST",
           "host": [
-            "http://localhost:8081"
+            "http://command:8080"
           ]
         }
       ]
@@ -48,7 +48,7 @@
           "url_pattern": "/employees/{id}",
           "method": "DELETE",
           "host": [
-            "http://localhost:8081"
+            "http://command:8080"
           ]
         }
       ]
@@ -61,7 +61,7 @@
           "url_pattern": "/employees/{id}",
           "method": "PUT",
           "host": [
-            "http://localhost:8081"
+            "http://command:8080"
           ]
         }
       ]
